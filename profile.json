@@ -45,10 +45,26 @@
     "CodeInterview_AI": "CodeInterview AI",
     "alternative_credit_evaluation_tool": "AgriCred",
     "Real_Time_Sign_Language_Translator": "Real-Time Sign Language Translator",
-    "chest-xray-pneumonia-detection-System": "Chest X-Ray Pneumonia Detection"
+    "chest-xray-pneumonia-detection-System": "Chest X-Ray Pneumonia Detection",
+    "AWS_SCD_guni": "AWS Student Community Day, GUNI",
+    "AWS_SBG_GUNI-website": "AWS Student Builder Group website",
+    "Guni-redirection": "GUNI Redirection",
+    "YashasRajR-training-baseline": "Training Baseline",
+    "CropIQ": "CropIQ",
+    "ai-music-recommendation-system": "AI Music Recommendation",
+    "human-behavior-tracking-system": "Human Behaviour Tracking",
+    "career_dendrogram_system": "Career Dendrogram",
+    "banking_operations_simulation": "Banking Operations Simulation",
+    "Sentiment_Analysis_Dashboard": "Sentiment Analysis Dashboard",
+    "Portfolio_website": "Portfolio Website",
+    "web_arithmetic_calculator": "Web Arithmetic Calculator"
   },
   "descriptions": {
     "Real_Time_Sign_Language_Translator": "Detects hand gestures in real time with MediaPipe and OpenCV and turns them into text and speech, to make conversations more accessible.",
     "alternative_credit_evaluation_tool": "Credit evaluation for farmers without a credit history: a transparent 100-point score, an explainable default-risk model and crop guidance from MSP data."
-  }
+  },
+  "exclude": [
+    "YashasRajR"
+  ],
+  "header_card_base": "https://raw.githubusercontent.com/YashasRajR/YashasRajR/main/cards/headers"
 }

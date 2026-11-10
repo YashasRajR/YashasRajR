@@ -137,7 +137,9 @@ class Card:
                f'viewBox="0 0 {self.w} {self.h}" role="img" aria-label="{esc(self.label)}">'
                f'<title>{esc(self.label)}</title><style>{style}</style>'
                f'<defs>{"".join(self.defs)}</defs>{"".join(self.parts)}</svg>')
-        (CARDS / f"{self.name}.svg").write_text(svg, encoding="utf-8")
+        out = CARDS / f"{self.name}.svg"
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_text(svg, encoding="utf-8")
         return len(svg)
 
 
@@ -651,6 +653,133 @@ def repo_card(profile, repo, i, t0):
     return card
 
 
+def repo_title(profile, name):
+    t = profile.get("display_names", {}).get(name)
+    if t:
+        return t
+    words = name.replace("_", " ").replace("-", " ").split()
+    return " ".join(w if any(c.isupper() for c in w) else w.capitalize() for w in words)
+
+
+def repo_initials(title):
+    words = [w for w in title.replace("-", " ").replace(",", " ").split() if w[0].isalnum()]
+    return ((words[0][0] + words[1][0]) if len(words) > 1 else words[0][:2]).upper() if words else "??"
+
+
+def iso_box(bx, by, s, col, initials, size):
+    """A little isometric box with the project's initials on its front."""
+    face = C["ink"] if col == C["yellow"] else C["white"]
+    return (f'<path d="M{bx} {by} l{s * .5:.1f} -{s * .28:.1f} l{s * .5:.1f} {s * .28:.1f} l-{s * .5:.1f} {s * .28:.1f} Z" '
+            f'fill="{C["white"]}" stroke="{C["ink"]}" stroke-width="2.5" stroke-linejoin="round"/>'
+            f'<path d="M{bx} {by} v{s * .78:.1f} l{s * .5:.1f} {s * .28:.1f} v-{s * .78:.1f} Z" fill="{col}" '
+            f'stroke="{C["ink"]}" stroke-width="2.5" stroke-linejoin="round"/>'
+            f'<path d="M{bx + s} {by} v{s * .78:.1f} l-{s * .5:.1f} {s * .28:.1f} v-{s * .78:.1f} Z" '
+            f'fill="{blend(col, C["ink"], .25)}" stroke="{C["ink"]}" stroke-width="2.5" stroke-linejoin="round"/>'), face
+
+
+def pills(card, x, y, tags, col, delay, size=13, max_x=None):
+    for k, tg in enumerate(t for t in tags if t):
+        w = text_width(tg, "mono", size) + 20
+        if max_x and x + w > max_x:
+            break
+        fill = col if k == 0 else C["white"]
+        tc = C["ink"] if fill in (C["white"], C["yellow"]) else C["white"]
+        h = size + 11
+        card.add(f'<g{anim_attr(f"pop {delay + k * .06:.2f}")}><rect x="{x:.1f}" y="{y}" width="{w:.1f}" height="{h}" rx="{h / 2}" '
+                 f'fill="{fill}" stroke="{C["ink"]}" stroke-width="2"/>')
+        card.text(x + w / 2, y + h / 2 + size * .36, tg, "mono", size, tc, "middle")
+        card.add('</g>')
+        x += w + 7
+
+
+def repo_tags(repo):
+    tags = [repo.get("language") or "", plural(repo.get("stars", 0), "star")]
+    if repo.get("pushedAt"):
+        tags.append(f"updated {fmt_date(dt.date.fromisoformat(repo['pushedAt'][:10]))}")
+    return tags
+
+
+PALETTE = None
+
+
+def mini_repo(profile, repo, i, t0):
+    """A smaller card for every other repo, two to a row; the left column carries the chute."""
+    name = repo["name"]
+    left = i % 2 == 0
+    card = Card(f"repo-{name}", 412, 172, t0)
+    title = repo_title(profile, name)
+    desc = profile.get("descriptions", {}).get(name) or repo.get("description") or "A project in my workshop."
+    card.label = f"{title}: {desc}"
+    plate(card, f"m{i}", t0)
+    col = [C["blue"], C["green"], C["red"], C["yellow"]][i % 4]
+    bx, by, s = (70 if left else 26), 46, 40
+    box, face = iso_box(bx, by, s, col, "", 0)
+    card.add(f'<g{anim_attr(f"pop {t0 + .1:.2f}")}><g{loop("bob", t0 + 1 + i * .2, 1.9)}>{bounce(box, bx, by, t0 + by / SPEED)}'
+             f'</g></g>')
+    card.add(f'<g{loop("bob", t0 + 1 + i * .2, 1.9)}>')
+    card.text(bx + s * .25, by + s * .5 + 5, repo_initials(title), "display", 13, face, "middle", f"pop {t0 + .15:.2f}")
+    card.add('</g>')
+    x0 = bx + s + 20
+    size = 19
+    while text_width(title, "display", size) > 392 - x0 and size > 14:
+        size -= 1
+    card.text(x0, 44, title, "display", size, C["ink"], extra=f"up {t0 + .15:.2f}")
+    for j, line in enumerate(wrap(desc, "sans", 13.5, 392 - x0, 3)):
+        card.text(x0, 68 + j * 19, line, "sans", 13.5, C["gray_300"], extra=f"up {t0 + .22 + j * .04:.2f}")
+    tags = repo_tags(repo)
+    tags[-1] = tags[-1].replace("updated ", "")
+    pills(card, x0, 128, [tags[0], tags[-1]] if tags[0] else [tags[-1]], col, t0 + .35, 12, 396)
+    card.exit = chute(card, t0) if left else t0
+    return card
+
+
+def header_card(profile, repo, i):
+    """A banner for the top of each repository's own README, in the same marble-machine style."""
+    name = repo["name"]
+    card = Card(f"headers/{name}", 840, 250, 0.0)
+    title = repo_title(profile, name)
+    desc = profile.get("descriptions", {}).get(name) or repo.get("description") or "A project from my workshop."
+    card.label = f"{title}: {desc}"
+    bgs = [C["yellow"], C["sky"], C["mint"], "#ffe0db"]
+    cols = [C["red"], C["blue"], C["green"], C["yellow"]]
+    bg, col = bgs[i % 4], cols[(i + 1) % 4]
+    plate(card, f"hd{i}", 0, bg)
+    confetti(card, 12, 40 + i, [(40, 30, 560, 230), (580, 20, 830, 240)], .2)
+
+    x0 = 50
+    card.text(x0, 58, f"From {profile['name']}'s workshop", "mono", 15, C["gray_400"], extra="up .1")
+    size = 44
+    while text_width(title, "display", size) > 520 and size > 26:
+        size -= 2
+    card.text(x0 - 2, 58 + size + 4, title, "display", size, C["ink"], extra="up .2")
+    ty = 58 + size + 4
+    for j, line in enumerate(wrap(desc, "sans_bold", 16, 520, 3)):
+        card.text(x0, ty + 32 + j * 22, line, "sans_bold", 16, C["gray_300"], extra=f"up {.3 + j * .05:.2f}")
+    pills(card, x0, 202, repo_tags(repo), col, .5, 13, 560)
+
+    # The box rides a running belt; a marble rolls down a tube and drops into it, again and again.
+    bx, by, s = 640, 120, 90
+    box, face = iso_box(bx, by, s, col, "", 0)
+    card.add(f'<g{anim_attr("pop .3")}><g{loop("bob", 1.2, 1.9)}>{box}</g></g>')
+    card.add(f'<g{loop("bob", 1.2, 1.9)}>')
+    card.text(bx + s * .25, by + s * .5 + 9, repo_initials(title), "display", 26, face, "middle", "pop .4")
+    card.add('</g>')
+    belt_y = by + s * 1.06 + 8
+    card.defs.append(f'<clipPath id="hbelt"><rect x="{bx - 22}" y="{belt_y}" width="{s + 44}" height="12" rx="6"/></clipPath>')
+    card.add(f'<g{anim_attr("fade .3")}><rect x="{bx - 24}" y="{belt_y}" width="{s + 48}" height="12" rx="6" fill="{C["gray_500"]}" '
+             f'stroke="{C["ink"]}" stroke-width="2"/><g clip-path="url(#hbelt)"><g{loop("belt", 1, .9)}>'
+             + "".join(f'<circle cx="{bx - 40 + k * 17}" cy="{belt_y + 6}" r="2" fill="{C["white"]}"/>' for k in range(10))
+             + '</g></g></g>')
+    card.add(f'<g{anim_attr("pop .45")}>{gear(bx + s + 40, by + 10, 26, 9, C["red"] if col != C["red"] else C["blue"], 6)}</g>')
+    tube_path = f"M{bx + s + 66} 18 V40 Q{bx + s + 66} 58 {bx + s + 48} 58 H{bx + s * .5 + 18} Q{bx + s * .5} 58 {bx + s * .5} 76 V86"
+    card.add(tube(tube_path, .3))
+    drop = (f'<g opacity="0">{marble_svg(6)}'
+            f'<animateMotion path="{tube_path} V{by + 6}" dur="2.4s" begin="1s" repeatCount="indefinite"/>'
+            f'<animate attributeName="opacity" values="1;1;0" keyTimes="0;.9;1" dur="2.4s" begin="1s" repeatCount="indefinite"/></g>')
+    card.add(smil(drop, ""))
+    return card
+
+
 def blend(c1, c2, t):
     a = [int(c1[i:i + 2], 16) for i in (1, 3, 5)]
     b = [int(c2[i:i + 2], 16) for i in (1, 3, 5)]
@@ -713,7 +842,7 @@ def graph(data, days, t0):
 
 # ----------------------------------------------------------------- README.md
 
-def readme(profile, data, tiles, repos):
+def readme(profile, data, tiles, repos, others=()):
     login = profile["login"]
     lines = [
         f'<!-- Generated by scripts/render_cards.py. Edit profile.json, not this file. -->',
@@ -738,6 +867,12 @@ def readme(profile, data, tiles, repos):
     for r in repos:
         title = profile.get("display_names", {}).get(r["name"], r["name"])
         lines.append(f'  <a href="https://github.com/{login}/{r["name"]}"><img src="cards/repo-{r["name"]}.svg" width="100%" alt="{esc(title)}" /></a>')
+    if others:
+        lines += [f'</p>', f'', f'<p align="center">']
+        for k, r in enumerate(others):
+            sep = "" if k % 2 == 0 else ""
+            lines.append(f'  <a href="https://github.com/{login}/{r["name"]}"><img src="cards/repo-{r["name"]}.svg" '
+                         f'width="49.5%" alt="{esc(repo_title(profile, r["name"]))}" /></a>')
     lines += [
         f'</p>',
         f'',
@@ -752,8 +887,12 @@ def readme(profile, data, tiles, repos):
 def main():
     profile, data, days = load()
     CARDS.mkdir(exist_ok=True)
-    by_name = {r["name"]: r for r in data.get("repos", [])}
+    exclude = set(profile.get("exclude", [])) | {profile["login"]}
+    all_repos = [r for r in data.get("repos", []) if r["name"] not in exclude]
+    by_name = {r["name"]: r for r in all_repos}
     repos = [by_name.get(n, {"name": n}) for n in profile["featured"]]
+    others = sorted((r for r in all_repos if r["name"] not in profile["featured"]),
+                    key=lambda r: r.get("pushedAt", ""), reverse=True)
 
     # Each card starts when the marble arrives from the card above it.
     global PERIOD
@@ -767,17 +906,22 @@ def main():
         cards.append(activity(data, days, t)); t = cards[-1].exit + gap
         for i, r in enumerate(repos):
             cards.append(repo_card(profile, r, i, t)); t = cards[-1].exit + gap
+        for i in range(0, len(others), 2):            # two to a row; the left card carries the marble
+            row = [mini_repo(profile, r, i + k, t) for k, r in enumerate(others[i:i + 2])]
+            cards += row
+            t = row[0].exit + gap
         cards.append(graph(data, days, t))
         PERIOD = round(cards[-1].exit + 2.5, 1)       # one run, then a short pause before the next marble
 
+    cards += [header_card(profile, r, i) for i, r in enumerate(repos + others)]
     keep = {f"{c.name}.svg" for c in cards}
-    for old in CARDS.glob("*.svg"):
-        if old.name not in keep:
+    for old in CARDS.rglob("*.svg"):
+        if old.relative_to(CARDS).as_posix() not in keep:
             old.unlink()
     for c in cards:
         size = c.write()
         print(f"cards/{c.name}.svg  {size / 1024:.1f} KB")
-    readme(profile, data, profile["tiles"], repos)
+    readme(profile, data, profile["tiles"], repos, others)
     print(f"README.md  ({'static' if STATIC else 'animated'})")
 
 

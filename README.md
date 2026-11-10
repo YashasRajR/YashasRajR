@@ -21,5 +21,20 @@
 </p>
 
 <p align="center">
+  <a href="https://github.com/YashasRajR/AWS_SCD_guni"><img src="cards/repo-AWS_SCD_guni.svg" width="49.5%" alt="AWS Student Community Day, GUNI" /></a>
+  <a href="https://github.com/YashasRajR/web_arithmetic_calculator"><img src="cards/repo-web_arithmetic_calculator.svg" width="49.5%" alt="Web Arithmetic Calculator" /></a>
+  <a href="https://github.com/YashasRajR/human-behavior-tracking-system"><img src="cards/repo-human-behavior-tracking-system.svg" width="49.5%" alt="Human Behaviour Tracking" /></a>
+  <a href="https://github.com/YashasRajR/career_dendrogram_system"><img src="cards/repo-career_dendrogram_system.svg" width="49.5%" alt="Career Dendrogram" /></a>
+  <a href="https://github.com/YashasRajR/banking_operations_simulation"><img src="cards/repo-banking_operations_simulation.svg" width="49.5%" alt="Banking Operations Simulation" /></a>
+  <a href="https://github.com/YashasRajR/Guni-redirection"><img src="cards/repo-Guni-redirection.svg" width="49.5%" alt="GUNI Redirection" /></a>
+  <a href="https://github.com/YashasRajR/AWS_SBG_GUNI-website"><img src="cards/repo-AWS_SBG_GUNI-website.svg" width="49.5%" alt="AWS Student Builder Group website" /></a>
+  <a href="https://github.com/YashasRajR/CropIQ"><img src="cards/repo-CropIQ.svg" width="49.5%" alt="CropIQ" /></a>
+  <a href="https://github.com/YashasRajR/ai-music-recommendation-system"><img src="cards/repo-ai-music-recommendation-system.svg" width="49.5%" alt="AI Music Recommendation" /></a>
+  <a href="https://github.com/YashasRajR/Sentiment_Analysis_Dashboard"><img src="cards/repo-Sentiment_Analysis_Dashboard.svg" width="49.5%" alt="Sentiment Analysis Dashboard" /></a>
+  <a href="https://github.com/YashasRajR/Portfolio_website"><img src="cards/repo-Portfolio_website.svg" width="49.5%" alt="Portfolio Website" /></a>
+  <a href="https://github.com/YashasRajR/YashasRajR-training-baseline"><img src="cards/repo-YashasRajR-training-baseline.svg" width="49.5%" alt="Training Baseline" /></a>
+</p>
+
+<p align="center">
   <img src="cards/graph.svg" width="100%" alt="My year in marbles: my contribution graph for the last year" />
 </p>

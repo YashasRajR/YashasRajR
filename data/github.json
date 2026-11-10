@@ -1476,16 +1476,6 @@
  ],
  "repos": [
   {
-   "name": "CodeInterview_AI",
-   "url": "https://github.com/YashasRajR/CodeInterview_AI",
-   "description": "AI-powered mock interview platform that generates personalized technical interviews from resumes, evaluates responses, and provides real-time feedback.",
-   "language": "Python",
-   "languageColor": "#3572A5",
-   "stars": 0,
-   "forks": 0,
-   "pushedAt": "2026-11-10T10:03:10Z"
-  },
-  {
    "name": "alternative_credit_evaluation_tool",
    "url": "https://github.com/YashasRajR/alternative_credit_evaluation_tool",
    "description": "Prototype platform for alternative credit evaluation and crop guidance using digital technologies to support farmers' decision-making.",
@@ -1496,14 +1486,94 @@
    "pushedAt": "2026-11-10T10:40:28Z"
   },
   {
+   "name": "CodeInterview_AI",
+   "url": "https://github.com/YashasRajR/CodeInterview_AI",
+   "description": "AI-powered mock interview platform that generates personalized technical interviews from resumes, evaluates responses, and provides real-time feedback.",
+   "language": "Python",
+   "languageColor": "#3572A5",
+   "stars": 0,
+   "forks": 0,
+   "pushedAt": "2026-11-10T10:03:10Z"
+  },
+  {
    "name": "Real_Time_Sign_Language_Translator",
    "url": "https://github.com/YashasRajR/Real_Time_Sign_Language_Translator",
-   "description": "Real-Time Sign Language Translator A computer vision application that detects hand gestures in real time using MediaPipe and OpenCV, and translates them into text. Built to improve accessibility for the hearing-impaired community. Supports American Sign Language (ASL) gestures with a trained classification model.",
+   "description": "Real-Time Sign Language Translator A computer vision application that detects hand gestures in real time using MediaPipe and OpenCV, and translates them into text. Built to improve accessibility for people who use sign language.",
    "language": "Python",
    "languageColor": "#3572A5",
    "stars": 0,
    "forks": 0,
    "pushedAt": "2026-11-10T09:57:25Z"
+  },
+  {
+   "name": "AWS_SCD_guni",
+   "url": "https://github.com/YashasRajR/AWS_SCD_guni",
+   "description": "",
+   "language": "TypeScript",
+   "languageColor": "#3178C6",
+   "stars": 0,
+   "forks": 0,
+   "pushedAt": "2026-10-05T21:31:23Z"
+  },
+  {
+   "name": "web_arithmetic_calculator",
+   "url": "https://github.com/YashasRajR/web_arithmetic_calculator",
+   "description": "Responsive web-based calculator built with HTML, CSS, and JavaScript for performing basic arithmetic operations.",
+   "language": "JavaScript",
+   "languageColor": "#F1E05A",
+   "stars": 0,
+   "forks": 0,
+   "pushedAt": "2026-09-30T20:49:03Z"
+  },
+  {
+   "name": "human-behavior-tracking-system",
+   "url": "https://github.com/YashasRajR/human-behavior-tracking-system",
+   "description": "Real-time human behavior tracking system using Python, OpenCV, and MediaPipe for face, hand, and gesture analysis.",
+   "language": "Python",
+   "languageColor": "#3572A5",
+   "stars": 0,
+   "forks": 0,
+   "pushedAt": "2026-09-30T20:44:00Z"
+  },
+  {
+   "name": "career_dendrogram_system",
+   "url": "https://github.com/YashasRajR/career_dendrogram_system",
+   "description": "Built a console-based career guidance application using C++ with object-oriented programming, user authentication, file handling, templates, and career recommendation features.",
+   "language": "C++",
+   "languageColor": "#F34B7D",
+   "stars": 0,
+   "forks": 0,
+   "pushedAt": "2026-09-30T19:47:48Z"
+  },
+  {
+   "name": "banking_operations_simulation",
+   "url": "https://github.com/YashasRajR/banking_operations_simulation",
+   "description": "Java Swing banking application with MySQL, JDBC, secure authentication, transaction management, and PDF receipt generation using Apache PDFBox.",
+   "language": "JavaScript",
+   "languageColor": "#F1E05A",
+   "stars": 0,
+   "forks": 0,
+   "pushedAt": "2026-09-30T11:26:43Z"
+  },
+  {
+   "name": "Guni-redirection",
+   "url": "https://github.com/YashasRajR/Guni-redirection",
+   "description": "",
+   "language": "HTML",
+   "languageColor": "#E34C26",
+   "stars": 0,
+   "forks": 0,
+   "pushedAt": "2026-09-28T10:05:28Z"
+  },
+  {
+   "name": "AWS_SBG_GUNI-website",
+   "url": "https://github.com/YashasRajR/AWS_SBG_GUNI-website",
+   "description": "",
+   "language": "HTML",
+   "languageColor": "#E34C26",
+   "stars": 0,
+   "forks": 0,
+   "pushedAt": "2026-09-27T23:53:24Z"
   },
   {
    "name": "chest-xray-pneumonia-detection-System",
@@ -1514,6 +1584,66 @@
    "stars": 0,
    "forks": 0,
    "pushedAt": "2026-09-26T02:23:05Z"
+  },
+  {
+   "name": "CropIQ",
+   "url": "https://github.com/YashasRajR/CropIQ",
+   "description": "AI-Powered Crop Yield Intelligence",
+   "language": "Jupyter Notebook",
+   "languageColor": "#DA5B0B",
+   "stars": 0,
+   "forks": 0,
+   "pushedAt": "2026-09-19T01:47:49Z"
+  },
+  {
+   "name": "ai-music-recommendation-system",
+   "url": "https://github.com/YashasRajR/ai-music-recommendation-system",
+   "description": "Machine learning-based music recommendation system that provides personalized song recommendations using user preferences and listening patterns.",
+   "language": "Python",
+   "languageColor": "#3572A5",
+   "stars": 0,
+   "forks": 0,
+   "pushedAt": "2026-07-10T18:32:50Z"
+  },
+  {
+   "name": "Sentiment_Analysis_Dashboard",
+   "url": "https://github.com/YashasRajR/Sentiment_Analysis_Dashboard",
+   "description": "A full-stack web application that analyzes the sentiment of any text input and returns a breakdown of positive, negative, and neutral scores. Built with a Python NLP backend and a React dashboard.",
+   "language": "",
+   "languageColor": "",
+   "stars": 0,
+   "forks": 0,
+   "pushedAt": "2026-06-29T11:15:49Z"
+  },
+  {
+   "name": "Portfolio_website",
+   "url": "https://github.com/YashasRajR/Portfolio_website",
+   "description": "Initial portfolio project",
+   "language": "JavaScript",
+   "languageColor": "#F1E05A",
+   "stars": 0,
+   "forks": 0,
+   "pushedAt": "2026-04-27T09:08:02Z"
+  },
+  {
+   "name": "YashasRajR-training-baseline",
+   "url": "https://github.com/YashasRajR/YashasRajR-training-baseline",
+   "description": "Prerequisites and preparation for training.",
+   "language": "Jupyter Notebook",
+   "languageColor": "#DA5B0B",
+   "stars": 0,
+   "forks": 0,
+   "pushedAt": "2026-04-25T11:18:09Z"
+  },
+  {
+   "name": "YashasRajR",
+   "url": "https://github.com/YashasRajR/YashasRajR",
+   "description": "Config files for my GitHub profile.",
+   "language": "",
+   "languageColor": "",
+   "stars": 0,
+   "forks": 0,
+   "pushedAt": "2025-03-22T20:06:53Z"
   }
  ]
 }

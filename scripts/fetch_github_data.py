@@ -18,7 +18,14 @@ ROOT = Path(__file__).resolve().parent.parent
 QUERY = """
 query($login: String!) {
   user(login: $login) {
-    repositories(privacy: PUBLIC, ownerAffiliations: OWNER) { totalCount }
+    repositories(first: 100, privacy: PUBLIC, ownerAffiliations: OWNER, isFork: false,
+                 orderBy: {field: PUSHED_AT, direction: DESC}) {
+      totalCount
+      nodes {
+        name url description stargazerCount forkCount pushedAt
+        primaryLanguage { name color }
+      }
+    }
     contributionsCollection {
       contributionCalendar {
         totalContributions
@@ -28,16 +35,6 @@ query($login: String!) {
   }
 }
 """
-
-REPO_QUERY = """
-query($owner: String!, $name: String!) {
-  repository(owner: $owner, name: $name) {
-    name url description stargazerCount forkCount pushedAt
-    primaryLanguage { name color }
-  }
-}
-"""
-
 
 def graphql(query, variables, token):
     req = urllib.request.Request(
@@ -66,11 +63,7 @@ def main():
             for w in cal["weeks"] for d in w["contributionDays"]]
 
     repos = []
-    for name in profile["featured"]:
-        r = graphql(REPO_QUERY, {"owner": login, "name": name}, token)["repository"]
-        if not r:
-            print(f"Skipping {name}: repository not found", file=sys.stderr)
-            continue
+    for r in user["repositories"]["nodes"]:
         lang = r.get("primaryLanguage") or {}
         repos.append({"name": r["name"], "url": r["url"], "description": r["description"] or "",
                       "language": lang.get("name", ""), "languageColor": lang.get("color", ""),
@@ -88,7 +81,7 @@ def main():
     out = ROOT / "data" / "github.json"
     out.parent.mkdir(exist_ok=True)
     out.write_text(json.dumps(data, indent=1) + "\n", encoding="utf-8")
-    print(f"{data['total']} contributions over {len(days)} days, {len(repos)} featured repos")
+    print(f"{data['total']} contributions over {len(days)} days, {len(repos)} public repos")
 
 
 if __name__ == "__main__":
