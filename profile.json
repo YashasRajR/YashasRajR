@@ -1,0 +1,54 @@
+{
+  "login": "YashasRajR",
+  "name": "Yashas Raj R",
+  "handle": "@YashasRajR",
+  "tagline": "Building intelligent solutions with code, data and curiosity.",
+  "machine": {
+    "inputs": [
+      "Code",
+      "Data",
+      "Curiosity"
+    ],
+    "output": "Intelligent solutions"
+  },
+  "portrait": "assets/portrait.jpg",
+  "tiles": [
+    {
+      "id": "linkedin",
+      "title": "LinkedIn",
+      "subtitle": "Work, talks and writing",
+      "icon": "person",
+      "href": "https://www.linkedin.com/in/yashas-raj-r-116037325"
+    },
+    {
+      "id": "projects",
+      "title": "Projects",
+      "subtitle": "{public_repos} public repositories",
+      "icon": "stack",
+      "href": "https://github.com/YashasRajR?tab=repositories"
+    },
+    {
+      "id": "portfolio",
+      "title": "Portfolio",
+      "subtitle": "Source of my website",
+      "icon": "planet",
+      "href": "https://github.com/YashasRajR/Portfolio_website"
+    }
+  ],
+  "featured": [
+    "CodeInterview_AI",
+    "alternative_credit_evaluation_tool",
+    "Real_Time_Sign_Language_Translator",
+    "chest-xray-pneumonia-detection-System"
+  ],
+  "display_names": {
+    "CodeInterview_AI": "CodeInterview AI",
+    "alternative_credit_evaluation_tool": "AgriCred",
+    "Real_Time_Sign_Language_Translator": "Real-Time Sign Language Translator",
+    "chest-xray-pneumonia-detection-System": "Chest X-Ray Pneumonia Detection"
+  },
+  "descriptions": {
+    "Real_Time_Sign_Language_Translator": "Detects hand gestures in real time with MediaPipe and OpenCV and turns them into text and speech, to make conversations more accessible.",
+    "alternative_credit_evaluation_tool": "Credit evaluation for farmers without a credit history: a transparent 100-point score, an explainable default-risk model and crop guidance from MSP data."
+  }
+}
